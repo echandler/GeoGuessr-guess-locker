@@ -6,7 +6,7 @@
 // @author       echandler
 // @match        https://www.geoguessr.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=geoguessr.com
-// @downloadURL
+// @downloadURL  https://github.com/echandler/GeoGuessr-guess-locker/raw/main/GeoGuessrGuessLocker.user.js
 // @run-at       document-start
 // @grant        GM_addStyle
 // ==/UserScript==

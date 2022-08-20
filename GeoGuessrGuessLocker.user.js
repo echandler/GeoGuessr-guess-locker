@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Press L to lock your guess v1.1.
+// @name         Press L to lock your guess v1.2.
 // @namespace    GeoGuessr scripts
-// @version      1.1
+// @version      1.2
 // @description  Lock in guess when playing GeoGuessr.
 // @author       echandler
 // @match        https://www.geoguessr.com/*
@@ -119,7 +119,7 @@ function newSetMap(...args) {
 
     this._keypressListener = (e)=>{
 
-        if (e.which && e.which != 2) return;
+        if (e.type === "mousedown" && e.which && e.which != 2) return;
         if (e.key && e.key != "l") return;
 
        // if (!this._setPosition){

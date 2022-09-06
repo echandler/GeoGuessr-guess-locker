@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Press L to lock your guess v1.2.
+// @name         Press L to lock your guess v1.3.
 // @namespace    GeoGuessr scripts
-// @version      1.2
+// @version      1.3
 // @description  Lock in guess when playing GeoGuessr.
 // @author       echandler
 // @match        https://www.geoguessr.com/*

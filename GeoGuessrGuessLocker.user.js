@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Press L to lock your guess v1.3.
+// @name         Press L to lock your guess v1.4
 // @namespace    GeoGuessr scripts
-// @version      1.3
+// @version      1.4
 // @description  Lock in guess when playing GeoGuessr.
 // @author       echandler
 // @match        https://www.geoguessr.com/*
@@ -27,7 +27,7 @@ const mutationCallback = function(mutationsList, observer) {
     for(let mutation of mutationsList) {
         if (mutation.type === "childList") {
             let el = mutation.addedNodes[0];
-            if (el && el.tagName === "SCRIPT" && /common.js/.test(el.src)){
+            if (el && el.tagName === "SCRIPT" && /map/.test(el.src)){
                 observer.disconnect();
 
                 el.addEventListener("load", function(){
@@ -50,26 +50,21 @@ let clicks = [];
 
 unsafeWindow.modify_google_maps_Map = function(msg){
     let googleMap = google.maps.Map;
+    let listener = googleMap.prototype.addListener;
 
-    google.maps.Map = function(){
-        let map = new googleMap(...arguments);
-        let listener = map.addListener;
-
-        map.addListener = function(name, fn){
+    googleMap.prototype.addListener = function(name, fn){
+        let ret = listener.apply(this, arguments);
+        if (name === "click"){
             let obj = {
-                i:  listener.apply(map, arguments)
+                i: ret,
+                fn : fn,
             };
+            clicks.push(obj);
+        }
+        return ret;
+    }
 
-            if (name === "click"){
-                obj.fn = fn;
-                clicks.push(obj);
-            }
-
-            return obj.i;
-        };
-
-        return map;
-    };
+    googleMap.prototype = googleMap.prototype;
 };
 
 unsafeWindow.modify_google_maps_OverlayView = function () {
